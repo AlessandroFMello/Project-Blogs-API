@@ -12,4 +12,9 @@ module.exports = {
   
     return { code: 201, user: newUser };
   },
+  getAll: async () => {
+    const allUsers = await User.findAll();
+
+    return { code: 200, allUsers };
+  },
 };
