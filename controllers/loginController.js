@@ -5,7 +5,6 @@ module.exports = {
     try {
       const { email, password } = req.body;
       const { code, message, token } = await loginService.login(email, password);
-  
       if (!token) {
         return res.status(code).json({ message });
       }

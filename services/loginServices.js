@@ -11,15 +11,6 @@ const jwtConfig = {
 
 module.exports = {
   login: async (email, password) => {
-    const validationObject = {
-      '': 'is not allowed to be empty',
-      null: 'is required',
-      undefined: 'is required',
-    };
-    if (email === Object.keys(validationObject) || password === Object.keys(validationObject)) {
-      return { code: 400, message: validationObject[email] };
-    }
-
     const userValidation = await User.findOne({ where: { email, password } });
 
     if (!userValidation) {
@@ -31,6 +22,6 @@ module.exports = {
 
     const token = jwt.sign({ data: user }, secret, jwtConfig);
   
-    return { code: 200, token };
+    return { code: 200, token: { token } };
   },
 };
