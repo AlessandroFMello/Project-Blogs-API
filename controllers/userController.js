@@ -15,4 +15,14 @@ module.exports = {
       return res.status(500).json({ message: 'Algo deu errado' });
     }
   },
+  getAll: async (_req, res, _next) => {
+    try {
+      const { code, allUsers } = await userService.getAll();
+    
+      return res.status(code).json(allUsers);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: 'Algo deu errado' });
+    }
+  },
 };
