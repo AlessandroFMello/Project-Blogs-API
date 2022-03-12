@@ -12,16 +12,15 @@ const jwtConfig = {
 module.exports = {
   login: async (email, password) => {
     const userValidation = await User.findOne({ where: { email, password } });
-
-    if (!userValidation) {
+    if (userValidation === null) {
       return { code: 400, message: 'Invalid fields' };
     }
+    const { dataValues } = userValidation;
 
-    const user = userValidation.dataValues;
-    delete user.password;
-
-    const token = jwt.sign({ data: user }, secret, jwtConfig);
-  
-    return { code: 200, token: { token } };
+    if (dataValues.email === email && dataValues.password === password) {
+        const token = jwt.sign({ data: email }, secret, jwtConfig);
+    
+        return { code: 200, token: { token } };
+      }
   },
 };
