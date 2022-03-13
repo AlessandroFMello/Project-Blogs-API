@@ -41,4 +41,26 @@ module.exports = {
 
     return { code: 200, post };
   },
+  update: async (id, title, content, userId) => {
+    const postToUpdate = await BlogPosts.findOne({
+      where: { id },
+      include: [
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ], 
+    });
+
+    if (!postToUpdate) {
+      return { code: 404, message: 'Post does not exist' };
+    }
+
+    if (postToUpdate.dataValues.userId !== userId) {
+      return { code: 401, message: 'Unauthorized user' };
+    }
+
+    await postToUpdate.update({
+      title, content,
+    });
+
+    return { code: 200, postToUpdate };
+  },
 };
