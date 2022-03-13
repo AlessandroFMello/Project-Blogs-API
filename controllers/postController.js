@@ -41,4 +41,22 @@ module.exports = {
       return res.status(500).json({ message: error.message });
     }
   },
+  update: async (req, res, _next) => {
+    try {
+      const { id } = req.params;
+      const { title, content } = req.body;
+      const { id: userId } = req.token.data;
+
+      const { code, message, postToUpdate } = await postService.update(id, title, content, userId);
+  
+      if (!postToUpdate) {
+        return res.status(code).json({ message });
+      }
+  
+      return res.status(code).json(postToUpdate);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: error.message });
+    }
+  },
 };
