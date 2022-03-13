@@ -5,7 +5,16 @@ module.exports = (sequelize, DataTypes) => {
   },
   {
     timestamps: false, // remove a obrigatoriedade de utilizar os campos `createdAt` e `updatedAt`
+    tableName: 'Categories',
   });
+
+  Category.associate = (models) => {
+    Category.belongsToMany(models.BlogPosts, {
+      foreignKey: 'categoryId',
+      through: 'PostsCategories',
+      as: 'posts',
+    });
+  };
 
   return Category;
 };

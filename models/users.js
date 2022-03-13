@@ -10,5 +10,12 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false, // remove a obrigatoriedade de utilizar os campos `createdAt` e `updatedAt`
   });
 
+  User.associate = (models) => {
+    User.hasMany(models.BlogPosts, {
+      foreignKey: 'userId',
+      as: 'posts',
+    });
+  };
+
   return User;
 };
