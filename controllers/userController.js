@@ -12,7 +12,7 @@ module.exports = {
       return res.status(code).json(user);
     } catch (error) {
       console.log(error);
-      return res.status(500).json({ message: 'Algo deu errado' });
+      return res.status(500).json({ message: error.message });
     }
   },
   getAll: async (_req, res, _next) => {
@@ -22,7 +22,7 @@ module.exports = {
       return res.status(code).json(allUsers);
     } catch (error) {
       console.log(error);
-      return res.status(500).json({ message: 'Algo deu errado' });
+      return res.status(500).json({ message: error.message });
     }
   },
   getById: async (req, res, _next) => {
@@ -37,7 +37,7 @@ module.exports = {
       return res.status(code).json(user);
     } catch (error) {
       console.log(error);
-      return res.status(500).json({ message: 'Algo deu errado' });
+      return res.status(500).json({ message: error.message });
     }
   },
 };

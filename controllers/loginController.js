@@ -12,7 +12,7 @@ module.exports = {
       return res.status(code).json(token);
     } catch (error) {
       console.log(error);
-      return res.status(500).json({ message: 'Algo deu errado' });
+      return res.status(500).json({ message: error.message });
     }
   },
 };
