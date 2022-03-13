@@ -60,15 +60,20 @@ module.exports = {
     }
   },
   delete: async (req, res, _next) => {
-    const { id } = req.params;
-    const { id: userId } = req.token.data;
-
-    const { code, message } = await postService.delete(id, userId);
-
-    if (message) {
-      return res.status(code).json({ message });
+    try {
+      const { id } = req.params;
+      const { id: userId } = req.token.data;
+  
+      const { code, message } = await postService.delete(id, userId);
+  
+      if (message) {
+        return res.status(code).json({ message });
+      }
+  
+      return res.status(code).end();
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: error.message });
     }
-
-    return res.status(code).end();
   },
 };
