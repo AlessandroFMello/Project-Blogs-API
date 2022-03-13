@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPosts } = require('../models');
 const { Category } = require('../models');
 const { User } = require('../models');
@@ -32,7 +33,7 @@ module.exports = {
       include: [
         { model: User, as: 'user', attributes: { exclude: ['password'] } },
         { model: Category, as: 'categories', through: { attributes: [] } },
-    ], 
+      ], 
   });
 
     if (!post) {
@@ -77,5 +78,24 @@ module.exports = {
     await postToDelete.destroy();
 
     return { code: 204 };
+  },
+  search: async (query) => {
+    if (!query) {
+      const allPosts = await BlogPosts.findAll({
+        include: [
+          { model: User, as: 'user', attributes: { exclude: ['password'] } },
+          { model: Category, as: 'categories', through: { attributes: [] } },
+        ], 
+      });
+      return { code: 200, posts: allPosts };
+    }
+    const postToSearch = await BlogPosts.findAll({
+      where: { [Op.or]: [{ title: query }, { content: query }] },
+      include: [
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ], 
+    });
+    return { code: 200, posts: postToSearch };
   },
 };
