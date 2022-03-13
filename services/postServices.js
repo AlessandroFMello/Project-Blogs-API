@@ -74,6 +74,8 @@ module.exports = {
       return { code: 401, message: 'Unauthorized user' };
     }
 
+    await postToDelete.destroy();
+
     return { code: 204 };
   },
 };
