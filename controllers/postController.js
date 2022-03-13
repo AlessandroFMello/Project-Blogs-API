@@ -16,6 +16,14 @@ module.exports = {
       return res.status(500).json({ message: error.message });
     }
   },
+  getAll: async (_req, res, _next) => {
+    try {
+      const { code, allPosts } = await postService.getAll();
+    
+      return res.status(code).json(allPosts);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: error.message });
     }
   },
 };
