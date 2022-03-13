@@ -12,4 +12,9 @@ module.exports = {
 
     return { code: 201, category: newCategory };
   },
+  getAll: async () => {
+    const allCategories = await Category.findAll();
+
+    return { code: 200, allCategories };
+  },
 };
