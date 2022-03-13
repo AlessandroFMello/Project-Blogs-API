@@ -26,4 +26,19 @@ module.exports = {
 
     return { code: 200, user };
   },
+  delete: async (userId) => {
+    const userToDelete = await User.findByPk(userId);
+
+    if (!userToDelete) {
+      return { code: 404, message: 'User does not exist' };
+    }
+
+    if (userToDelete.dataValues.id !== userId) {
+      return { code: 401, message: 'Unauthorized user' };
+    }
+
+    await userToDelete.destroy();
+
+    return { code: 204 };
+  },
 };
