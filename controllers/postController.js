@@ -76,4 +76,16 @@ module.exports = {
       return res.status(500).json({ message: error.message });
     }
   },
+  search: async (req, res, _next) => {
+    try {
+      const { q } = req.query;
+
+      const { code, posts } = await postService.search(q);
+
+      return res.status(code).json(posts);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: error.message });
+    }
+  },
 };
