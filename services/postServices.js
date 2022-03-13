@@ -63,4 +63,17 @@ module.exports = {
 
     return { code: 200, postToUpdate };
   },
+  delete: async (id, userId) => {
+    const postToDelete = await BlogPosts.findByPk(id);
+
+    if (!postToDelete) {
+      return { code: 404, message: 'Post does not exist' };
+    }
+
+    if (postToDelete.dataValues.userId !== userId) {
+      return { code: 401, message: 'Unauthorized user' };
+    }
+
+    return { code: 204 };
+  },
 };
