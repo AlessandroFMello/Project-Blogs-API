@@ -6,7 +6,7 @@ const validationMiddlewares = [postValidation, tokenValidation];
 
 router.post('/', validationMiddlewares, postController.create);
 
-// router.get('/', userController.getAll);
+router.get('/', tokenValidation, postController.getAll);
 
 // router.get('/:id', userController.getById);
 
