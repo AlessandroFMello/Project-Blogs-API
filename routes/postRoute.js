@@ -4,6 +4,8 @@ const { postValidation, tokenValidation, postUpdateValidation } = require('../mi
 
 const validationMiddlewares = [postValidation, tokenValidation];
 
+router.get('/search', tokenValidation, postController.search);
+
 router.post('/', validationMiddlewares, postController.create);
 
 router.get('/', tokenValidation, postController.getAll);
