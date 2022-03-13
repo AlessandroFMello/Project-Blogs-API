@@ -59,4 +59,16 @@ module.exports = {
       return res.status(500).json({ message: error.message });
     }
   },
+  delete: async (req, res, _next) => {
+    const { id } = req.params;
+    const { id: userId } = req.token.data;
+
+    const { code, message } = await postService.delete(id, userId);
+
+    if (message) {
+      return res.status(code).json({ message });
+    }
+
+    return res.status(code).end();
+  },
 };
