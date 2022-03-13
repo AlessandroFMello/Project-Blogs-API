@@ -25,4 +25,19 @@ module.exports = {
       return res.status(500).json({ message: 'Algo deu errado' });
     }
   },
+  getById: async (req, res, _next) => {
+    try {
+      const { id } = req.params;
+      const { code, message, user } = await userService.getById(id);
+  
+      if (!user) {
+        return res.status(code).json({ message });
+      }
+  
+      return res.status(code).json(user);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: 'Algo deu errado' });
+    }
+  },
 };
