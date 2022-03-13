@@ -9,4 +9,6 @@ const validationMiddlewares = [
 
 router.post('/', validationMiddlewares, categoryController.create);
 
+router.get('/', tokenValidation, categoryController.getAll);
+
 module.exports = router;
