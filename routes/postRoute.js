@@ -12,4 +12,6 @@ router.get('/:id', tokenValidation, postController.getById);
 
 router.put('/:id', [tokenValidation, postUpdateValidation], postController.update);
 
+router.delete('/:id', tokenValidation, postController.delete);
+
 module.exports = router;
