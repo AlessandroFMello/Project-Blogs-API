@@ -2,7 +2,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 
-const secret = process.env.SECRET;
+const secret = process.env.JWT_SECRET;
 
 const jwtConfig = {
   expiresIn: '7d',
@@ -12,15 +12,14 @@ const jwtConfig = {
 module.exports = {
   login: async (email, password) => {
     const userValidation = await User.findOne({ where: { email, password } });
-    if (userValidation === null) {
+    if (!userValidation) {
       return { code: 400, message: 'Invalid fields' };
     }
-    const { dataValues } = userValidation;
 
-    if (dataValues.email === email && dataValues.password === password) {
-        const token = jwt.sign({ data: email }, secret, jwtConfig);
-    
-        return { code: 200, token: { token } };
-      }
+    const user = userValidation.dataValues;
+
+    const token = jwt.sign({ data: { id: user.id, email } }, secret, jwtConfig);
+
+    return { code: 200, token: { token } };
   },
 };
