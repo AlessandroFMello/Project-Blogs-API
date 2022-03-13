@@ -17,4 +17,13 @@ module.exports = {
 
     return { code: 200, allUsers };
   },
+  getById: async (id) => {
+    const user = await User.findOne({ where: { id } });
+
+    if (!user) {
+      return { code: 404, message: 'User does not exist' };
+    }
+
+    return { code: 200, user };
+  },
 };
