@@ -5,6 +5,7 @@ module.exports = Joi.object({
     'any.required': '400|"title" is required',
     'string.base': '422|"title" must be a string',
   }),
+  // Referência: Ajuda pessoal do Denis Johnatan
   categoryIds: Joi.forbidden().messages({
     'any.unknown': '400|Categories cannot be edited',
   }),
